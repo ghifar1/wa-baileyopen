@@ -105,33 +105,6 @@ async function connect(id, socket_id)
                 await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
             }
 
-            if(conv === "/bidikmisi")
-            {
-                var msg = '*-- Cek Pencairan Bidikmisi --*\n\n' +
-                'Untuk mengecek status pencairan bidikmisi kamu, ketik:\n' +
-                '/bidikmisi/cek/(NIM)/(Nomor Rekening)\n' +
-                'Contoh: /bidikmisi/cek/11910xxx/00140xxxx\n\n' +
-                '*Fitur ini hanya berlaku bagi mahasiswa Paramadina.'
-
-                await InitBot.chatRead(message.key.remoteJid);
-                await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-            }
-
-            if(conv.includes("/bidikmisi/cek"))
-            {
-                var linetext = message.message.conversation;
-                await InitBot.chatRead(message.key.remoteJid);
-                await InitBot.sendMessage(message.key.remoteJid, "Sedang mengecek, harap tunggu...", MessageType.text);
-                const bm = new Bidikmisi();
-                try {
-                    var hasil = await bm.result(linetext);
-                    await InitBot.sendMessage(message.key.remoteJid, hasil, MessageType.text);
-                    //console.log(hasil);
-                }catch(e)
-                {
-                    console.error(e)
-                }
-            }
 
             if(conv === "/cekauth")
             {
@@ -145,48 +118,6 @@ async function connect(id, socket_id)
                     msg = 'Sesi sedang login';
                 }
                 await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-            }
-
-            if(conv.includes("/login"))
-            {
-                await InitBot.chatRead(message.key.remoteJid);
-                await InitBot.sendMessage(message.key.remoteJid, 'Sedang login...', MessageType.text);
-                try {
-                    let msg = await parmad.login(conv, message.key.remoteJid);
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }catch(e)
-                {
-                    let msg = e;
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }
-            }
-
-            if(conv.includes("/getsemester"))
-            {
-                await InitBot.chatRead(message.key.remoteJid);
-                try {
-                    let msg = await parmad.getSemester(conv, message.key.remoteJid);
-                    console.log(msg);
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }catch(e)
-                {
-                    let msg = e;
-                    console.log(msg);
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }
-            }
-
-            if(conv.includes("/getkhs"))
-            {
-                await InitBot.chatRead(message.key.remoteJid);
-                try{
-                    let msg = await parmad.getKhs(conv, message.key.remoteJid);
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }catch(e)
-                {
-                    let msg = e;
-                    await InitBot.sendMessage(message.key.remoteJid, msg, MessageType.text);
-                }
             }
 
             if(conv == "/werewolf" && message.participant)
