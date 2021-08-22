@@ -1,8 +1,6 @@
 import { MessageType, WAConnection } from '@adiwajshing/baileys'
 import { io } from './socket.js';
 import qr from 'qr-image';
-import Bidikmisi from './modul/bidikmisi.js';
-import parmad from './modul/parmad.js';
 import main from './modul/werewolf/main.js';
 import * as fs from 'fs';
 
